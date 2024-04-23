@@ -157,3 +157,22 @@ class TestVistaRuta(unittest.TestCase):
         self.assertEqual(response_2.status_code, 404)
         self.assertEqual(json.loads(response_2.data)['message'], "Ruta no encontrada")
 
+    def test_get_ruta(self):
+        response = self.app.get('/rutas/noexiste')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(json.loads(response.data), {"message": "Ruta no encontrada", "code": 404})
+        response = self.app.post('/rutas', json={
+            "route_name": "Ruta de prueba",
+            "route_description": "Descripcion de la ruta de prueba",
+            "route_location_A": "Ubicacion A de la ruta de prueba",
+            "route_location_B": "Ubicacion B de la ruta de prueba",
+            "route_latlon_A": "Latitud y longitud de la ubicacion A de la ruta de prueba",
+            "route_latlon_B": "Latitud y longitud de la ubicacion B de la ruta de prueba",
+            "route_type": "Tipo de ruta de prueba",
+            "link": "https://rutadeprueba.com"
+        })
+        ruta_id = json.loads(response.data)['content']['id']
+        response = self.app.get(f'/rutas/{ruta_id}')
+        self.assertEqual(response.status_code, 200)
+        self.app.delete(f'/rutas/{ruta_id}')
+

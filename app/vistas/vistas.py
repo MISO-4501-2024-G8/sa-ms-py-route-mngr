@@ -11,6 +11,8 @@ import uuid
 
 ruta_schema = RutaSchema()
 
+ruta_no_encontrada = "Ruta no encontrada"
+
 def generate_uuid():
     uid = uuid.uuid4()
     parts = str(uid).split('-')
@@ -38,11 +40,17 @@ class VistaRuta(Resource):
         return {"message": "Ruta creada", "code": 201, "content": ruta_schema.dump(ruta)}, 201
 
 class VistaRutaID(Resource):
+    def get(self, ruta_id):
+        ruta = Ruta.query.filter_by(id=ruta_id).first()
+        if ruta is None:
+            return {"message": ruta_no_encontrada, "code": 404}, 404
+        return {"message": "OK", "content": ruta_schema.dump(ruta), "code": 200}, 200
+    
     def put(self, ruta_id):
         data = request.get_json()
         ruta = Ruta.query.filter_by(id=ruta_id).first()
         if ruta is None:
-            return {"message": "Ruta no encontrada", "code": 404}, 404
+            return {"message": ruta_no_encontrada, "code": 404}, 404
         
         # Cambios de campos
         if ruta.route_name != data['route_name']:
@@ -69,7 +77,7 @@ class VistaRutaID(Resource):
     def delete(self, ruta_id):
         ruta = Ruta.query.filter_by(id=ruta_id).first()
         if ruta is None:
-            return {"message": "Ruta no encontrada", "code": 404}, 404
+            return {"message": ruta_no_encontrada, "code": 404}, 404
         db.session.delete(ruta)
         db.session.commit()
         return {"message": "Ruta eliminada", "code": 200, "content": ruta_schema.dump(ruta)}, 200
