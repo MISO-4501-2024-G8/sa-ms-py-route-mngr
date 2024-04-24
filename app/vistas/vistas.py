@@ -53,22 +53,38 @@ class VistaRutaID(Resource):
             return {"message": ruta_no_encontrada, "code": 404}, 404
         
         # Cambios de campos
+        changes = 0
         if ruta.route_name != data['route_name']:
             ruta.route_name = data['route_name']
+            changes += 1
         if ruta.route_description != data['route_description']:
             ruta.route_description = data['route_description']
+            changes += 1
         if ruta.route_location_A != data['route_location_A']:
             ruta.route_location_A = data['route_location_A']
+            changes += 1
         if ruta.route_location_B != data['route_location_B']:
             ruta.route_location_B = data['route_location_B']
+            changes += 1
         if ruta.route_latlon_A != data['route_latlon_A']:
             ruta.route_latlon_A = data['route_latlon_A']
+            changes += 1
         if ruta.route_latlon_B != data['route_latlon_B']:
             ruta.route_latlon_B = data['route_latlon_B']
+            changes += 1
         if ruta.route_type != data['route_type']:
             ruta.route_type = data['route_type']
+            changes += 1
+        if ruta.sport != data['sport']:
+            ruta.sport = data['sport']
+            changes += 1
         if ruta.link != data['link']:
             ruta.link = data['link']
+            changes += 1
+
+        print(f' * changes: {changes}')
+        if changes == 0:
+            return {"message": "No hay cambios", "code": 200}, 200
 
         ruta.updatedAt = datetime.now()
         db.session.commit()
