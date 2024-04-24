@@ -47,6 +47,7 @@ class TestVistaRuta(unittest.TestCase):
             "route_latlon_A": "Latitud y longitud de la ubicacion A de la ruta de prueba",
             "route_latlon_B": "Latitud y longitud de la ubicacion B de la ruta de prueba",
             "route_type": "Tipo de ruta de prueba",
+            "sport":"Atletismo",
             "link": "https://rutadeprueba.com"
         })
         self.assertEqual(response.status_code, 201)
@@ -73,6 +74,7 @@ class TestVistaRuta(unittest.TestCase):
             "route_latlon_A": "Latitud y longitud de la ubicacion A de la ruta de prueba",
             "route_latlon_B": "Latitud y longitud de la ubicacion B de la ruta de prueba",
             "route_type": "Tipo de ruta de prueba",
+            "sport":"Atletismo",
             "link": "https://rutadeprueba.com"
         })
         ruta_id = json.loads(response.data)['content']['id']
@@ -84,6 +86,7 @@ class TestVistaRuta(unittest.TestCase):
             "route_latlon_A": "Latitud y longitud de la ubicacion A de la ruta de prueba modificada",
             "route_latlon_B": "Latitud y longitud de la ubicacion B de la ruta de prueba modificada",
             "route_type": "Tipo de ruta de prueba modificada",
+            "sport":"Ciclismo",
             "link": "https://rutadeprueba.com/modificada"
         })
         self.assertEqual(response.status_code, 200)
@@ -108,6 +111,7 @@ class TestVistaRuta(unittest.TestCase):
             "route_latlon_A": "Latitud y longitud de la ubicacion A de la ruta de prueba modificada",
             "route_latlon_B": "Latitud y longitud de la ubicacion B de la ruta de prueba modificada",
             "route_type": "Tipo de ruta de prueba modificada",
+            "sport":"Ciclismo",
             "link": "https://rutadeprueba.com/modificada"
         })
         self.assertEqual(response_2.status_code, 404)
@@ -119,11 +123,15 @@ class TestVistaRuta(unittest.TestCase):
             "route_location_B": "Ubicacion B de la ruta de prueba modificada",
             "route_latlon_A": "Latitud y longitud de la ubicacion A de la ruta de prueba modificada",
             "route_latlon_B": "Latitud y longitud de la ubicacion B de la ruta de prueba modificada",
-            "route_type": "Tipo de ruta de prueba modificada",
+            "route_type": "Tipo de ruta de prueba modificada B",
+            "sport":"Ciclismo",
             "link": "https://rutadeprueba.com/modificada"
         })
         self.assertEqual(response_3.status_code, 200)
         self.assertEqual(json.loads(response_3.data)['message'], "Ruta actualizada")
+        response_4 = self.app.put(f'/rutas/{ruta_id}', json=json.loads(response_3.data)['content'])
+        self.assertEqual(response_4.status_code, 200)
+        self.assertEqual(json.loads(response_4.data)['message'], "No hay cambios")
 
     
     def test_delete_rutas(self):
@@ -135,6 +143,7 @@ class TestVistaRuta(unittest.TestCase):
             "route_latlon_A": "Latitud y longitud de la ubicacion A de la ruta de prueba",
             "route_latlon_B": "Latitud y longitud de la ubicacion B de la ruta de prueba",
             "route_type": "Tipo de ruta de prueba",
+            "sport":"Ciclismo",
             "link": "https://rutadeprueba.com"
         })
         ruta_id = json.loads(response.data)['content']['id']
@@ -149,6 +158,7 @@ class TestVistaRuta(unittest.TestCase):
         self.assertEqual(json.loads(response.data)['content']['route_latlon_A'], "Latitud y longitud de la ubicacion A de la ruta de prueba")
         self.assertEqual(json.loads(response.data)['content']['route_latlon_B'], "Latitud y longitud de la ubicacion B de la ruta de prueba")
         self.assertEqual(json.loads(response.data)['content']['route_type'], "Tipo de ruta de prueba")
+        self.assertEqual(json.loads(response.data)['content']['sport'], "Ciclismo")
         self.assertEqual(json.loads(response.data)['content']['link'], "https://rutadeprueba.com")
         self.assertIsNotNone(json.loads(response.data)['content']['id'])
         self.assertIsNotNone(json.loads(response.data)['content']['createdAt'])
@@ -169,6 +179,7 @@ class TestVistaRuta(unittest.TestCase):
             "route_latlon_A": "Latitud y longitud de la ubicacion A de la ruta de prueba",
             "route_latlon_B": "Latitud y longitud de la ubicacion B de la ruta de prueba",
             "route_type": "Tipo de ruta de prueba",
+            "sport":"Ciclismo",
             "link": "https://rutadeprueba.com"
         })
         ruta_id = json.loads(response.data)['content']['id']
