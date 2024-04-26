@@ -12,6 +12,7 @@ import uuid
 ruta_schema = RutaSchema()
 
 ruta_no_encontrada = "Ruta no encontrada"
+date_format = "%Y-%m-%d %H:%M:%S"
 
 def generate_uuid():
     uid = uuid.uuid4()
@@ -31,6 +32,10 @@ class VistaRuta(Resource):
     
     def post(self):
         data = request.get_json()
+        if data['route_date'] is None:
+            data['route_date'] = datetime.now()
+        else:
+            data['route_date'] = datetime.strptime(data['route_date'], date_format)
         data['id'] = generate_uuid()
         data['createdAt'] = datetime.now()
         data['updatedAt'] = datetime.now()
@@ -80,6 +85,9 @@ class VistaRutaID(Resource):
             changes += 1
         if ruta.link != data['link']:
             ruta.link = data['link']
+            changes += 1
+        if ruta.route_date != datetime.strptime(data['route_date'], date_format):
+            ruta.route_date = datetime.strptime(data['route_date'], date_format)
             changes += 1
 
         print(f' * changes: {changes}')
