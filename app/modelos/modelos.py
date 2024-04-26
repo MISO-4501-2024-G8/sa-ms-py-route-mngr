@@ -17,6 +17,7 @@ class Ruta(db.Model):
     route_type = db.Column(db.String(255))
     sport = db.Column(db.String(255))
     link = db.Column(db.String(500))
+    route_date = db.Column(db.DateTime)
     createdAt = db.Column(db.DateTime)
     updatedAt = db.Column(db.DateTime)
 
