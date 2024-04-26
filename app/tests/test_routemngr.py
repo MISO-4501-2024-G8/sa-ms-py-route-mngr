@@ -47,6 +47,7 @@ class TestVistaRuta(unittest.TestCase):
             "route_latlon_A": "Latitud y longitud de la ubicacion A de la ruta de prueba",
             "route_latlon_B": "Latitud y longitud de la ubicacion B de la ruta de prueba",
             "route_type": "Tipo de ruta de prueba",
+            "route_date": "2024-05-28 14:30:00",
             "sport":"Atletismo",
             "link": "https://rutadeprueba.com"
         })
@@ -74,6 +75,7 @@ class TestVistaRuta(unittest.TestCase):
             "route_latlon_A": "Latitud y longitud de la ubicacion A de la ruta de prueba",
             "route_latlon_B": "Latitud y longitud de la ubicacion B de la ruta de prueba",
             "route_type": "Tipo de ruta de prueba",
+            "route_date": "2024-05-28 14:30:00",
             "sport":"Atletismo",
             "link": "https://rutadeprueba.com"
         })
@@ -86,6 +88,7 @@ class TestVistaRuta(unittest.TestCase):
             "route_latlon_A": "Latitud y longitud de la ubicacion A de la ruta de prueba modificada",
             "route_latlon_B": "Latitud y longitud de la ubicacion B de la ruta de prueba modificada",
             "route_type": "Tipo de ruta de prueba modificada",
+            "route_date": "2023-05-28 14:30:00",
             "sport":"Ciclismo",
             "link": "https://rutadeprueba.com/modificada"
         })
@@ -111,6 +114,7 @@ class TestVistaRuta(unittest.TestCase):
             "route_latlon_A": "Latitud y longitud de la ubicacion A de la ruta de prueba modificada",
             "route_latlon_B": "Latitud y longitud de la ubicacion B de la ruta de prueba modificada",
             "route_type": "Tipo de ruta de prueba modificada",
+            "route_date": "2024-05-28 14:30:00",
             "sport":"Ciclismo",
             "link": "https://rutadeprueba.com/modificada"
         })
@@ -124,12 +128,24 @@ class TestVistaRuta(unittest.TestCase):
             "route_latlon_A": "Latitud y longitud de la ubicacion A de la ruta de prueba modificada",
             "route_latlon_B": "Latitud y longitud de la ubicacion B de la ruta de prueba modificada",
             "route_type": "Tipo de ruta de prueba modificada B",
+            "route_date": "2024-05-28 14:30:00",
             "sport":"Ciclismo",
             "link": "https://rutadeprueba.com/modificada"
         })
         self.assertEqual(response_3.status_code, 200)
         self.assertEqual(json.loads(response_3.data)['message'], "Ruta actualizada")
-        response_4 = self.app.put(f'/rutas/{ruta_id}', json=json.loads(response_3.data)['content'])
+        response_4 = self.app.put(f'/rutas/{ruta_id}', json={
+            "route_name": "Ruta de prueba modificada",
+            "route_description": "Descripcion de la ruta de prueba modificada",
+            "route_location_A": "Ubicacion A de la ruta de prueba modificada",
+            "route_location_B": "Ubicacion B de la ruta de prueba modificada",
+            "route_latlon_A": "Latitud y longitud de la ubicacion A de la ruta de prueba modificada",
+            "route_latlon_B": "Latitud y longitud de la ubicacion B de la ruta de prueba modificada",
+            "route_type": "Tipo de ruta de prueba modificada B",
+            "route_date": "2024-05-28 14:30:00",
+            "sport":"Ciclismo",
+            "link": "https://rutadeprueba.com/modificada"
+        })
         self.assertEqual(response_4.status_code, 200)
         self.assertEqual(json.loads(response_4.data)['message'], "No hay cambios")
 
@@ -143,6 +159,7 @@ class TestVistaRuta(unittest.TestCase):
             "route_latlon_A": "Latitud y longitud de la ubicacion A de la ruta de prueba",
             "route_latlon_B": "Latitud y longitud de la ubicacion B de la ruta de prueba",
             "route_type": "Tipo de ruta de prueba",
+            "route_date": "2024-05-28 14:30:00",
             "sport":"Ciclismo",
             "link": "https://rutadeprueba.com"
         })
@@ -179,6 +196,7 @@ class TestVistaRuta(unittest.TestCase):
             "route_latlon_A": "Latitud y longitud de la ubicacion A de la ruta de prueba",
             "route_latlon_B": "Latitud y longitud de la ubicacion B de la ruta de prueba",
             "route_type": "Tipo de ruta de prueba",
+            "route_date": "2024-05-28 14:30:00",
             "sport":"Ciclismo",
             "link": "https://rutadeprueba.com"
         })
